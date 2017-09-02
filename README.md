@@ -1,71 +1,68 @@
-WiFi Thing utility
+MQTT Wifi SPIFFS Thing utility
+
+# Purpose #
+Implement sensors and actuators on MQTT in just a few lines.
+
+# Features #
+- Selects the access point with the best signal automatically.
+- Reconnects when the access point disconnects.
+- Stores access points settings on SPIFFS.
+- Stores MQTT settings on SPIFFS.
+- Uses lambda for callbacks.
+- Uses a generic Value class as data type.
+
+# Usage #
+Create a data folder with two files: mqtt.txt and wifi.txt.
+Write mqtt settings in mqtt.txt
+1st line: server
+2nd line: port
+3rd line: username
+4th line: password
+
+Write access point settings in wifi.txt
+odd lines: ssid
+even lines: password
+
+Set callback onStateChange.
+
+Add sensor and actuator topic callbacks.
+
+Call begin() inside setup()
+Call handle() inside loop()
 
 # Example #
 ```
-#define MQTT_SERVER "ip"
-#define MQTT_PORT port
-#define MQTT_USER "user"
-#define MQTT_PASSWORD "pass"
+#include "Thing.h"
 
-#define MQTT_CLIENT "example"
-#define MQTT_DISPLAY_TOPIC "actuator/example"
-#define MQTT_SENSOR_TOPIC "sensor/example"
-
-//#define _DEBUG_
-
-#include <Thing.h>
+using namespace g3rb3n;
 
 Thing thing;
 
-void setup() {
+int count = 0;
+
+void setup()
+{
   Serial.begin(230400);
   Serial.println();
-
-  pinMode(BUILTIN_LED, OUTPUT);  
-
-  onActivity(true);
-
-  Serial.print("Client:");
-  Serial.print(MQTT_CLIENT);
-  Serial.println();
-    
-  thing.onActivity(&onActivity);
-  thing.addWiFi(WIFI_SSID, WIFI_PASS);
-  thing.setupWiFi();
-  thing.setMQTT(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT, MQTT_USER, MQTT_PASSWORD);
-
-  thing.addTopic(SENSOR_TOPIC, 5000, getValue);
-  Serial.println(SENSOR_TOPIC);
-
-  thing.subscribe(ACTUATOR_TOPIC, callback);
-  Serial.println(ACTUATOR_TOPIC);
-
-  onActivity(false);
+  
+  thing.onStateChange([](const String& msg){
+    Serial.println(msg);
+  });
+  
+  thing.addSensor("sensor/test", 1000, [](Value& v){
+    v = count++;
+  });
+  
+  thing.addActuator("display/test", [](Value& v){
+    String msg = v; 
+    Serial.println(msg);
+  });
+  
+  thing.begin();
 }
 
-void loop() {
-  thing.loop();
-}
-
-void onActivity(bool active){
-  digitalWrite(BUILTIN_LED, active ? LOW : HIGH);  
-}
-
-void getValue(float& value)
+void loop()
 {
-  value = 100;
+  thing.handle();
 }
-
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  char msg[length+1];
-  for (int i = 0; i < length; i++) {
-    msg[i] = (char)payload[i];
-  }
-  msg[length] = 0;
-  Serial.println(msg);
-}
-
 ```

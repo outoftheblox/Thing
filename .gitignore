@@ -1,3 +1,7 @@
+/data/*
+**/.pioenvs
+**/.piolibdeps
+
 # Prerequisites
 *.d
 
