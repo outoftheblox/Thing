@@ -55,6 +55,8 @@ namespace g3rb3n
       void setServer(String& server, uint16_t port);
       void setCredentials(String& username, String& password);
       void setClient(String& client);
+
+      String& clientId();
       
       void addSensor(String& topic, int interval, std::function<void(Value&)> f);
       void addSensor(char* topic, int interval, std::function<void(Value&)> f);

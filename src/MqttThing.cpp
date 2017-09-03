@@ -35,6 +35,7 @@ pubSubClient(wifiClient)
 {
   things.push_back(this);
   pubSubClient.setServer(server.c_str(), port);
+  client = String(ESP.getChipId(), 16);
 }
 
 MqttThing::MqttThing(const char* _server, uint16_t _port, const char* _client, const char* _user, const char* _password)
@@ -75,6 +76,11 @@ void MqttThing::setCredentials(String& _username, String& _password)
 void MqttThing::setClient(String& _client)
 {
   client = _client;
+}
+
+String& MqttThing::clientId()
+{
+  return client;
 }
 
 void MqttThing::addSensor(char* topic, int interval, std::function<void(Value&)> f)
@@ -133,7 +139,7 @@ void MqttThing::handle()
   pubSubClient.loop();
   
   long now = millis();
-  for(auto & topic: this->sensorTopics) 
+  for(auto & topic: sensorTopics) 
   {
     if (now - topic.last > topic.interval)
     {
