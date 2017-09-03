@@ -16,10 +16,12 @@ WifiThing::~WifiThing()
 
 void WifiThing::begin()
 {
+/*
   stateChange("Scanning for networks");
   scan();
   stateChange("Selecting best network");
   sortAccessPointsByQuality();
+*/
 //  removeUnaccessible();
 }
 
@@ -92,7 +94,8 @@ void WifiThing::rescan()
   stateChange("Scanning for networks");
   scan();
   stateChange("Selecting best network");
-  sortAccessPointsByQuality();  
+  sortAccessPointsByQuality();
+  _state = State::Disconnected;
 }
 
 void WifiThing::handle()
