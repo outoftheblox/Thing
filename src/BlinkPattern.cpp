@@ -6,6 +6,7 @@ BlinkPattern::BlinkPattern(uint8_t _pin)
 :
 pin(_pin)
 {
+  pinMode(pin, OUTPUT);
 }
 
 BlinkPattern::~BlinkPattern()
