@@ -129,10 +129,23 @@ void Value::operator=(const char* value)
   std::memcpy(value_, value, size);
 }
 
+void Value::operator=(String& value)
+{
+  type_ = t_cstring;
+  int size = value.length() + 1;
+  value_ = allocate(size);
+  const char* cstr = value.c_str();
+  std::memcpy(value_, cstr, size);
+}
+
 Value::operator bool() const
 {
   if (type_ == t_cstring)
+  {
+    if (((char*)value_)[0] == 't') return true;
+    if (((char*)value_)[0] == 'f') return false;
     return (bool)atoi((char*)value_);
+  }
   return value<bool>();
 }
 
