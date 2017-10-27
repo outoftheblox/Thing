@@ -3,7 +3,7 @@
 
 
 #include <PubSubClient.h>
-#include <WiFiClient.h>
+#include <WiFiClientSecure.h>
 
 #include <functional>
 #include <vector>
@@ -13,7 +13,7 @@
 namespace g3rb3n
 {
 
-  struct SensorTopic 
+  struct SensorTopic
   {
     String name;
     int interval;
@@ -28,7 +28,7 @@ namespace g3rb3n
   };
 
 
-  class MqttThing 
+  class MqttThing
   {
     public:
 
@@ -43,26 +43,26 @@ namespace g3rb3n
       String password;
 
       PubSubClient pubSubClient;
-      WiFiClient wifiClient;
-      
+      WiFiClientSecure wifiClient;
+
       std::function<void(const String&)> stateChangeCallback;
 
     public:
       MqttThing();
       MqttThing(const char* _server, uint16_t _port, const char* _client, const char* _user, const char* _password);
       ~MqttThing();
-      
+
       void setServer(String& server, uint16_t port);
       void setCredentials(String& username, String& password);
       void setClient(String& client);
 
       String& clientId();
-      
+
       void addSensor(String& topic, int interval, std::function<void(Value&)> f);
       void addSensor(char* topic, int interval, std::function<void(Value&)> f);
       void addActuator(String& topic, std::function<void(Value&)> cb);
       void addActuator(char* topic, std::function<void(Value&)> cb);
-      
+
       void onStateChange(std::function<void(const String&)> callback);
 
       void begin();
