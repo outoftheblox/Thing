@@ -27,7 +27,12 @@ void WifiThing::begin()
 
 WifiThing::State WifiThing::state() const
 {
-  return _state;  
+  return _state;
+}
+
+bool WifiThing::connected() const
+{
+  return _state == State::Connected;
 }
 
 void WifiThing::setConnectingTimeoutMs(unsigned long ms)
@@ -150,8 +155,8 @@ void WifiThing::scan()
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
   std::for_each(
-    _accessPoints.begin(), 
-    _accessPoints.end(), 
+    _accessPoints.begin(),
+    _accessPoints.end(),
     [](AccessPoint& ap){ ap.quality = -127; }
   );
   numberFoundNetworks = WiFi.scanNetworks();
@@ -181,7 +186,7 @@ void WifiThing::addUnsecureAccessPoints()
 void WifiThing::removeUnaccessible()
 {
   auto it = std::remove_if(
-    _accessPoints.begin(), _accessPoints.end(), 
+    _accessPoints.begin(), _accessPoints.end(),
     [] (const AccessPoint& ap){
       return ap.quality == -127;
     }
@@ -192,7 +197,7 @@ void WifiThing::removeUnaccessible()
 std::vector<AccessPoint>::iterator WifiThing::endAccessible()
 {
   auto it = std::remove_if(
-    _accessPoints.begin(), _accessPoints.end(), 
+    _accessPoints.begin(), _accessPoints.end(),
     [] (const AccessPoint& ap){
       return ap.quality == -127;
     }
@@ -211,7 +216,7 @@ void WifiThing::sortAccessPointsByQuality()
   }
 
   std::sort(
-    _accessPoints.begin(), _accessPoints.end(), 
+    _accessPoints.begin(), _accessPoints.end(),
     [] (const AccessPoint& a, const AccessPoint& b){ return a.quality > b.quality; }
   );
 }

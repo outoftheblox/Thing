@@ -6,14 +6,14 @@
 
 namespace g3rb3n
 {
-  struct AccessPoint 
+  struct AccessPoint
   {
     String ssid;
     String password;
     int8_t quality = -127;
   };
 
-  class WifiThing 
+  class WifiThing
   {
     public:
       enum class State
@@ -36,16 +36,17 @@ namespace g3rb3n
       uint8_t accessPointIndex = 0;
 
       std::function<void(const String&)> stateChangeCallback;
-      
+
     public:
       WifiThing();
       ~WifiThing();
 
       void begin();
       void handle();
-      
+
       State state() const;
-      
+      bool connected() const;
+
       void addAccessPoint(char* ssid, char* password);
       void addAccessPoint(String& ssid, String& pwd);
       void addAccessPoint(String& ssid);
@@ -54,7 +55,7 @@ namespace g3rb3n
 
       void onStateChange(std::function<void(const String&)> f);
       void setConnectingTimeoutMs(unsigned long ms);
-      
+
     private:
       void stateChange(const char* chars);
       void stateChange(String& str);
