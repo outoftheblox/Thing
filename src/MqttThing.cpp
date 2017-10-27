@@ -10,7 +10,7 @@ std::vector<MqttThing*> MqttThing::things;
 void MqttThing::callback(char* callbackTopic, uint8_t* buffer, unsigned int length)
 {
   char msg[length+1];
-  for (int i = 0; i < length; i++) 
+  for (int i = 0; i < length; i++)
   {
     msg[i] = (char)buffer[i];
   }
@@ -19,7 +19,7 @@ void MqttThing::callback(char* callbackTopic, uint8_t* buffer, unsigned int leng
   for (std::vector<MqttThing*>::iterator it = things.begin() ; it != things.end(); ++it)
   {
     MqttThing& thing = (**it);
-    for(auto & topic: (*it)->actuatorTopics) 
+    for(auto & topic: (*it)->actuatorTopics)
     {
       if (topic.name.equals(callbackTopic))
       {
@@ -131,15 +131,15 @@ void MqttThing::begin()
 
 void MqttThing::handle()
 {
-  if (!pubSubClient.connected()) 
+  if (!pubSubClient.connected())
   {
     if (stateChangeCallback) stateChangeCallback(String("Disconnected from MQTT server"));
     connect();
   }
   pubSubClient.loop();
-  
+
   long now = millis();
-  for(auto & topic: sensorTopics) 
+  for(auto & topic: sensorTopics)
   {
     if (now - topic.last > topic.interval)
     {
@@ -191,7 +191,7 @@ void MqttThing::handle()
 }
 
 
-void MqttThing::connect() 
+void MqttThing::connect()
 {
   // Loop until we're reconnected
   String msg("Connecting to MQTT server ");
@@ -208,8 +208,16 @@ void MqttThing::connect()
       stateChange(msg);
       return;
     }
-
-    for(auto & topic: actuatorTopics) 
+/*
+    if(!wifiClient.verifyCertChain(server.c_str()))
+    {
+      String msg("Could not verify domain name ");
+      msg += server;
+      stateChange(msg);
+      return;
+    }
+*/
+    for(auto & topic: actuatorTopics)
     {
       pubSubClient.subscribe(topic.name.c_str());
     }
