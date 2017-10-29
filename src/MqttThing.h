@@ -58,6 +58,7 @@ namespace g3rb3n
 
       String& clientId();
 
+      void publish(String& name, Value& value);
       void addSensor(String& topic, int interval, std::function<void(Value&)> f);
       void addSensor(char* topic, int interval, std::function<void(Value&)> f);
       void addActuator(String& topic, std::function<void(Value&)> cb);

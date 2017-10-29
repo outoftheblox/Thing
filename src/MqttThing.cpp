@@ -60,6 +60,11 @@ MqttThing::~MqttThing()
   }
 }
 
+void MqttThing::publish(String& name, Value& value)
+{
+  pubSubClient.publish(name.c_str(), String(value).c_str(), true);
+}
+
 void MqttThing::setServer(String& _server, uint16_t _port)
 {
   server = _server;
