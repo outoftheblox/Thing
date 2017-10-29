@@ -12,7 +12,7 @@ void setup()
 {
   Serial.begin(230400);
   Serial.println();
-  
+
   wifi.onStateChange([](const String& msg){
     Serial.print("wifi:");
     Serial.println(msg);}
@@ -26,7 +26,7 @@ void setup()
     v = count++;
   });
   mqtt.addActuator("display/test", [](Value& v){
-    String msg = v; 
+    String msg = v;
     Serial.println(msg);
   });
 
@@ -37,5 +37,5 @@ void setup()
 void loop()
 {
   wifi.handle();
-  mqtt.handle();
+  if (wifi.connected()) mqtt.handle();
 }

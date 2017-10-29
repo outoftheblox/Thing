@@ -5,10 +5,10 @@
 
 using namespace g3rb3n;
 
-#define SERVER "rfln.ddns.net"
-#define PORT 1883
-#define USERNAME "user@server"
-#define PASSWORD "password"
+#define SERVER "mqtt.outoftheblox.com"
+#define PORT 8883
+#define USERNAME "user"
+#define PASSWORD "pass"
 #define CLIENTID "test"
 
 #define SSID "ssid"
@@ -29,20 +29,20 @@ void setup()
 
   wifi.onStateChange([](const String& msg){
     Serial.print("wifi:");
-    Serial.println(msg);}
-  );
+    Serial.println(msg);
+  });
   mqtt.onStateChange([](const String& msg){
     Serial.print("mqtt:");
-    Serial.println(msg);}
-  );
+    Serial.println(msg);
+  });
 
   wifi.addAccessPoint(SSID, PASS);
-  
+
   mqtt.addSensor(SENSOR, 1000, [](Value& v){
     v = count++;
   });
   mqtt.addActuator(ACTUATOR, [](Value& v){
-    String msg = v; 
+    String msg = v;
     Serial.println(msg);
   });
 
@@ -53,5 +53,5 @@ void setup()
 void loop()
 {
   wifi.handle();
-  mqtt.handle();
+  if (wifi.connected()) mqtt.handle();
 }
