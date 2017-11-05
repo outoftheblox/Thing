@@ -10,16 +10,17 @@ namespace g3rb3n
   {
     private:
       File configFile;
-      
+
     public:
       SpiffsTextSettings();
 
       bool begin();
-      
+
       bool load(const char* filename);
-      
+
       String readString();
       int readInt();
+      bool readBool();
   };
 }
 

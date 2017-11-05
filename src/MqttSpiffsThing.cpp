@@ -8,12 +8,14 @@ MqttSpiffsThing::MqttSpiffsThing(String& name)
 :
 filename(name)
 {
+  Serial.println("Init");
 }
 
 MqttSpiffsThing::MqttSpiffsThing(const char* name)
 :
 filename(String(name))
 {
+  Serial.println("Init");
 }
 
 MqttSpiffsThing::~MqttSpiffsThing()
@@ -22,6 +24,7 @@ MqttSpiffsThing::~MqttSpiffsThing()
 
 void MqttSpiffsThing::begin()
 {
+  Serial.println("Begin");
   SpiffsTextSettings settings;
   settings.begin();
   bool success = settings.load(filename.c_str());
@@ -35,7 +38,8 @@ void MqttSpiffsThing::begin()
     uint16_t port = settings.readInt();
     String username = settings.readString();
     String password = settings.readString();
-    setServer(server, port);
+    bool useTLS = settings.readBool();
+    setServer(server, port, useTLS);
     setCredentials(username, password);
   }
   MqttThing::begin();

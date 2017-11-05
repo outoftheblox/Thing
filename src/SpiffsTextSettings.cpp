@@ -50,6 +50,16 @@ int SpiffsTextSettings::readInt()
   buffer[read] = 0;
   return atoi(buffer);
 }
+
+bool SpiffsTextSettings::readBool()
+{
+  char buffer[100];
+  int read = configFile.readBytesUntil('\n', buffer, 100);
+  buffer[read] = 0;
+  if (buffer[0] == 't') return true;
+  if (buffer[0] == 'f') return false;
+  return atoi(buffer);
+}
 }
 
 

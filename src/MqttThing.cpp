@@ -30,25 +30,42 @@ void MqttThing::callback(char* callbackTopic, uint8_t* buffer, unsigned int leng
 }
 
 MqttThing::MqttThing()
-:
-pubSubClient(wifiClient)
 {
+  wifiClient = NULL;
+  pubSubClient = NULL;
+  Serial.println("MqttThing()");
   things.push_back(this);
-  pubSubClient.setServer(server.c_str(), port);
   client = String(ESP.getChipId(), 16);
 }
 
-MqttThing::MqttThing(const char* _server, uint16_t _port, const char* _client, const char* _user, const char* _password)
+MqttThing::MqttThing(bool useTLS)
+{
+  if (!useTLS)
+    wifiClient = new WiFiClientSecure();
+  else
+    wifiClient = new WiFiClient();
+
+  pubSubClient = new PubSubClient(*wifiClient);
+  things.push_back(this);
+  pubSubClient->setServer(server.c_str(), port);
+  client = String(ESP.getChipId(), 16);
+}
+
+MqttThing::MqttThing(const char* _server, uint16_t _port, const char* _client, const char* _user, const char* _password, bool useTLS)
 :
-pubSubClient(wifiClient),
 server(String(_server)),
 port(_port),
 client(String(_client)),
 user(String(_user)),
 password(String(_password))
 {
+  if (useTLS)
+    wifiClient = new WiFiClientSecure();
+  else
+    wifiClient = new WiFiClient();
+  pubSubClient = new PubSubClient(*wifiClient);
   things.push_back(this);
-  pubSubClient.setServer(server.c_str(), port);
+  pubSubClient->setServer(server.c_str(), port);
 }
 
 MqttThing::~MqttThing()
@@ -64,51 +81,57 @@ void MqttThing::publish(String& name, Value& value)
 {
   if (value.type() == Value::t_bool){
     String s((bool)value);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_char){
     String s((char)value);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_short){
     String s((short)value);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_int){
     String s((int)value);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_long){
     String s((long)value);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_longlong){
     String s((long)value);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_float){
     String s((float)value, 7);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_double){
     String s((double)value, 13);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_longdouble){
     String s((double)value, 26);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
   if (value.type() == Value::t_cstring){
     String s(value);
-    pubSubClient.publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str(), true);
   }
 }
 
-void MqttThing::setServer(String& _server, uint16_t _port)
+void MqttThing::setServer(String& _server, uint16_t _port, bool useTLS)
 {
+  if (useTLS)
+    wifiClient = new WiFiClientSecure();
+  else
+    wifiClient = new WiFiClient();
+  pubSubClient = new PubSubClient(*wifiClient);
+
   server = _server;
   port = _port;
-  pubSubClient.setServer(server.c_str(), port);
+  pubSubClient->setServer(server.c_str(), port);
 }
 
 void MqttThing::setCredentials(String& _username, String& _password)
@@ -150,8 +173,8 @@ void MqttThing::addActuator(char* topic, std::function<void(Value&)> f)
 }
 
 void MqttThing::addActuator(String& name, std::function<void(Value&)> function){
-  this->pubSubClient.subscribe(name.c_str());
-  this->pubSubClient.setCallback(callback);
+  this->pubSubClient->subscribe(name.c_str());
+  this->pubSubClient->setCallback(callback);
   ActuatorTopic t;
   t.name = name;
   t.function = function;
@@ -175,12 +198,17 @@ void MqttThing::begin()
 
 void MqttThing::handle()
 {
-  if (!pubSubClient.connected())
+  if (!pubSubClient)
+  {
+    if (stateChangeCallback) stateChangeCallback(String("Client is not initialized"));
+    return;
+  }
+  if (!pubSubClient->connected())
   {
     if (stateChangeCallback) stateChangeCallback(String("Disconnected from MQTT server"));
     connect();
   }
-  pubSubClient.loop();
+  pubSubClient->loop();
 
   long now = millis();
   for(auto & topic: sensorTopics)
@@ -192,43 +220,43 @@ void MqttThing::handle()
       topic.function(value);
       if (value.type() == Value::t_bool){
         String s((bool)value);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_char){
         String s((char)value);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_short){
         String s((short)value);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_int){
         String s((int)value);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_long){
         String s((long)value);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_longlong){
         String s((long)value);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_float){
         String s((float)value, 7);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_double){
         String s((double)value, 13);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_longdouble){
         String s((double)value, 26);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
       if (value.type() == Value::t_cstring){
         String s(value);
-        pubSubClient.publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
       }
     }
   }
@@ -242,9 +270,9 @@ void MqttThing::connect()
   msg += server;
   stateChange(msg);
 
-  if (!pubSubClient.connected())
+  if (!pubSubClient->connected())
   {
-    if (!pubSubClient.connect(client.c_str(), user.c_str(), password.c_str()))
+    if (!pubSubClient->connect(client.c_str(), user.c_str(), password.c_str()))
     {
       String msg("Connecting to MQTT server ");
       msg += server;
@@ -263,7 +291,7 @@ void MqttThing::connect()
 */
     for(auto & topic: actuatorTopics)
     {
-      pubSubClient.subscribe(topic.name.c_str());
+      pubSubClient->subscribe(topic.name.c_str());
     }
     String msg("Connected to MQTT server ");
     msg += server;

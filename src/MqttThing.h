@@ -3,6 +3,7 @@
 
 
 #include <PubSubClient.h>
+#include <WiFiClient.h>
 #include <WiFiClientSecure.h>
 
 #include <functional>
@@ -42,17 +43,18 @@ namespace g3rb3n
       String user;
       String password;
 
-      PubSubClient pubSubClient;
-      WiFiClientSecure wifiClient;
+      PubSubClient* pubSubClient;
+      WiFiClient* wifiClient;
 
       std::function<void(const String&)> stateChangeCallback;
 
     public:
       MqttThing();
-      MqttThing(const char* _server, uint16_t _port, const char* _client, const char* _user, const char* _password);
+      MqttThing(bool useTLS);
+      MqttThing(const char* _server, uint16_t _port, const char* _client, const char* _user, const char* _password, bool useTLS);
       ~MqttThing();
 
-      void setServer(String& server, uint16_t port);
+      void setServer(String& server, uint16_t port, bool useTLS);
       void setCredentials(String& username, String& password);
       void setClient(String& client);
 
