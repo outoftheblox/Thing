@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <functional>
+#include <ESP8266WiFi.h>
 
 using namespace g3rb3n;
 
@@ -29,13 +30,26 @@ void MqttThing::callback(char* callbackTopic, uint8_t* buffer, unsigned int leng
   }
 }
 
+void MqttThing::setDefaultClientId()
+{
+  uint8_t arr[6];
+  WiFi.macAddress(arr);
+  for (byte i = 0; i < 6; ++i)
+  {
+    char buf[3];
+    sprintf(buf, "%02X", arr[i]);
+    client += buf;
+    if (i < 5) client += ':';
+  }
+}
+
 MqttThing::MqttThing()
 {
   wifiClient = NULL;
   pubSubClient = NULL;
   Serial.println("MqttThing()");
   things.push_back(this);
-  client = String(ESP.getChipId(), 16);
+  setDefaultClientId();
 }
 
 MqttThing::MqttThing(bool useTLS)
@@ -48,7 +62,7 @@ MqttThing::MqttThing(bool useTLS)
   pubSubClient = new PubSubClient(*wifiClient);
   things.push_back(this);
   pubSubClient->setServer(server.c_str(), port);
-  client = String(ESP.getChipId(), 16);
+  setDefaultClientId();
 }
 
 MqttThing::MqttThing(const char* _server, uint16_t _port, const char* _client, const char* _user, const char* _password, bool useTLS)

@@ -76,6 +76,7 @@ namespace g3rb3n
       std::vector<ActuatorTopic> actuatorTopics;
 
     private:
+      void setDefaultClientId();
       void stateChange(const String& msg);
       void connect();
 
