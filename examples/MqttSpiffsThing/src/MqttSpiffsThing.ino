@@ -23,12 +23,14 @@ void setup()
   wifi.begin();
   mqtt.begin();
 
-  mqtt.addSensor("sensor/test", 1000, [](Value& v){
+  mqtt.addSensor(mqtt.clientId() + "/test/count", 1000, [](Value& v){
     v = count++;
   });
-  mqtt.addActuator("display/test", [](Value& v){
+  mqtt.addActuator(mqtt.clientId() + "/test/display", [](Value& v){
     Serial.println(v);
   });
+
+  Serial.println(mqtt.clientId());
 }
 
 void loop()

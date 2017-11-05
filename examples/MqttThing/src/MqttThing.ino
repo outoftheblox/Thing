@@ -14,8 +14,8 @@ using namespace g3rb3n;
 #define SSID "ssid"
 #define PASS "pass"
 
-#define SENSOR "sensor/test"
-#define ACTUATOR "display/test"
+#define SENSOR "test/count"
+#define ACTUATOR "test/display"
 
 WifiThing wifi;
 MqttThing mqtt(SERVER, PORT, CLIENTID, USERNAME, PASSWORD, true);
@@ -28,12 +28,10 @@ void setup()
   Serial.println();
 
   wifi.onStateChange([](const String& msg){
-    Serial.print("wifi:");
-    Serial.println(msg);
+    Serial.print("wifi:" + msg);
   });
   mqtt.onStateChange([](const String& msg){
-    Serial.print("mqtt:");
-    Serial.println(msg);
+    Serial.println("mqtt:" + msg);
   });
 
   wifi.addAccessPoint(SSID, PASS);
@@ -42,8 +40,7 @@ void setup()
     v = count++;
   });
   mqtt.addActuator(ACTUATOR, [](Value& v){
-    String msg = v;
-    Serial.println(msg);
+    Serial.println(v);
   });
 
   wifi.begin();
