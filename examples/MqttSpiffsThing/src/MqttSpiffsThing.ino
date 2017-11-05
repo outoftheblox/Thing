@@ -14,24 +14,21 @@ void setup()
   Serial.println();
 
   wifi.onStateChange([](const String& msg){
-    Serial.print("wifi:");
-    Serial.println(msg);}
-  );
+    Serial.println("wifi:" + msg);
+  });
   mqtt.onStateChange([](const String& msg){
-    Serial.print("mqtt:");
-    Serial.println(msg);}
-  );
+    Serial.println("mqtt:" + msg);
+  });
+
+  wifi.begin();
+  mqtt.begin();
 
   mqtt.addSensor("sensor/test", 1000, [](Value& v){
     v = count++;
   });
   mqtt.addActuator("display/test", [](Value& v){
-    String msg = v;
-    Serial.println(msg);
+    Serial.println(v);
   });
-
-  wifi.begin();
-  mqtt.begin();
 }
 
 void loop()

@@ -18,7 +18,7 @@ using namespace g3rb3n;
 #define ACTUATOR "display/test"
 
 WifiThing wifi;
-MqttThing mqtt(SERVER, PORT, CLIENTID, USERNAME, PASSWORD);
+MqttThing mqtt(SERVER, PORT, CLIENTID, USERNAME, PASSWORD, true);
 
 int count = 0;
 
