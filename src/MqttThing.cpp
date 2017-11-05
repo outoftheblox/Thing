@@ -37,9 +37,9 @@ void MqttThing::setDefaultClientId()
   for (byte i = 0; i < 6; ++i)
   {
     char buf[3];
-    sprintf(buf, "%02X", arr[i]);
+    sprintf(buf, "%02x", arr[i]);
     client += buf;
-    if (i < 5) client += ':';
+    //if (i < 5) client += ':';
   }
 }
 
