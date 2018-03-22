@@ -1,7 +1,7 @@
 MQTT Wifi SPIFFS Thing utility
 
 # Purpose #
-Implement sensors and actuators on MQTT in just a few lines.
+Implement sensors and actuators on MQTT with TLS in just a few lines.
 
 # Features #
 - Selects the access point with the best signal automatically.
@@ -30,11 +30,16 @@ Add sensor and actuator topic callbacks.
 Call begin() inside setup()
 Call handle() inside loop()
 
+# Security weaknesses #
+Albeit the data streams are over TLS, there are many security weaknesses.
+- SPIFFS can be easily downloaded from a sensor.
+- No host check is performed on the TLS connection. 
+
 # Example #
 ```
 #include "Thing.h"
 
-using namespace g3rb3n;
+using namespace ootb;
 
 Thing thing;
 
