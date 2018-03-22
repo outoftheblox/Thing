@@ -3,7 +3,7 @@
 
 #include "WifiThing.h"
 
-namespace g3rb3n
+namespace ootb
 {
 
   class WifiSpiffsThing : public WifiThing

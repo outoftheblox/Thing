@@ -1,7 +1,7 @@
 #include "Thing.h"
 #include "BlinkPattern.h"
 
-using namespace g3rb3n;
+using namespace ootb;
 
 Thing thing;
 BlinkPattern blink(BUILTIN_LED);

@@ -3,7 +3,7 @@
 
 #include "MqttThing.h"
 
-namespace g3rb3n
+namespace ootb
 {
 
   class MqttSpiffsThing : public MqttThing

@@ -1,7 +1,7 @@
 #include "WifiSpiffsThing.h"
 #include "SpiffsTextSettings.h"
 
-using namespace g3rb3n;
+using namespace ootb;
 
 WifiSpiffsThing::WifiSpiffsThing(String& name)
 :

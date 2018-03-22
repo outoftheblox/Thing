@@ -1,7 +1,7 @@
 #include "MqttSpiffsThing.h"
 #include "WifiSpiffsThing.h"
 
-using namespace g3rb3n;
+using namespace ootb;
 
 MqttSpiffsThing mqtt("/mqtt.txt");
 WifiSpiffsThing wifi("/wifi.txt");
@@ -23,10 +23,10 @@ void setup()
   wifi.begin();
   mqtt.begin();
 
-  mqtt.addSensor(mqtt.clientId() + "/test/count", 1000, [](Value& v){
+  mqtt.addSensor(String("test/count/") + mqtt.clientId(), 1000, [](Value& v){
     v = count++;
   });
-  mqtt.addActuator(mqtt.clientId() + "/test/display", [](Value& v){
+  mqtt.addActuator(String("/test/display/") + mqtt.clientId(), [](Value& v){
     Serial.println(v);
   });
 

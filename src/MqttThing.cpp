@@ -4,7 +4,7 @@
 #include <functional>
 #include <ESP8266WiFi.h>
 
-using namespace g3rb3n;
+using namespace ootb;
 
 std::vector<MqttThing*> MqttThing::things;
 

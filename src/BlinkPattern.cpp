@@ -1,6 +1,6 @@
 #include "BlinkPattern.h"
 
-using namespace g3rb3n;
+using namespace ootb;
 
 BlinkPattern::BlinkPattern(uint8_t _pin)
 :

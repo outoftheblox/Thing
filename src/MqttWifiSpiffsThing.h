@@ -4,7 +4,7 @@
 #include <MqttSpiffsThing.h>
 #include <WifiSpiffsThing.h>
 
-namespace g3rb3n
+namespace ootb
 {
 
   class MqttWifiSpiffsThing : public MqttSpiffsThing, public WifiSpiffsThing

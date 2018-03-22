@@ -1,6 +1,6 @@
 #include "Thing.h"
 
-using namespace g3rb3n;
+using namespace ootb;
 
 Thing thing;
 

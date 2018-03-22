@@ -4,7 +4,7 @@
 #include <vector>
 #include <ESP8266WiFi.h>
 
-namespace g3rb3n
+namespace ootb
 {
   struct AccessPoint
   {

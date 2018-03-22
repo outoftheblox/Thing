@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-using namespace g3rb3n;
+using namespace ootb;
 
 #define SERVER "mqtt.outoftheblox.com"
 #define PORT 8883

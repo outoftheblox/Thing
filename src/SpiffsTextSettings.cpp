@@ -1,6 +1,6 @@
 #include "SpiffsTextSettings.h"
 
-namespace g3rb3n
+namespace ootb
 {
 
 SpiffsTextSettings::SpiffsTextSettings()
