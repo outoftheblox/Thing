@@ -95,43 +95,43 @@ void MqttThing::publish(String& name, Value& value)
 {
   if (value.type() == Value::t_bool){
     String s((bool)value);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_char){
     String s((char)value);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_short){
     String s((short)value);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_int){
     String s((int)value);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_long){
     String s((long)value);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_longlong){
     String s((long)value);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_float){
     String s((float)value, 7);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_double){
     String s((double)value, 13);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_longdouble){
     String s((double)value, 26);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
   if (value.type() == Value::t_cstring){
     String s(value);
-    pubSubClient->publish(name.c_str(), s.c_str(), true);
+    pubSubClient->publish(name.c_str(), s.c_str());
   }
 }
 
@@ -234,43 +234,43 @@ void MqttThing::handle()
       topic.function(value);
       if (value.type() == Value::t_bool){
         String s((bool)value);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_char){
         String s((char)value);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_short){
         String s((short)value);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_int){
         String s((int)value);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_long){
         String s((long)value);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_longlong){
         String s((long)value);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_float){
         String s((float)value, 7);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_double){
         String s((double)value, 13);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_longdouble){
         String s((double)value, 26);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
       if (value.type() == Value::t_cstring){
         String s(value);
-        pubSubClient->publish(topic.name.c_str(), s.c_str(), true);
+        pubSubClient->publish(topic.name.c_str(), s.c_str());
       }
     }
   }
