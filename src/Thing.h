@@ -1,12 +1,12 @@
 #ifndef _Thing_H
 #define _Thing_H
 
-#include <MqttWifiSpiffsThing.h>
+#include <MqttWifiSpiffsOtaThing.h>
 
 namespace ootb
 {
 
-  class Thing : public MqttWifiSpiffsThing
+  class Thing : public MqttWifiSpiffsOtaThing
   {
   };
 }
