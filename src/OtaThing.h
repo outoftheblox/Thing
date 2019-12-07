@@ -1,6 +1,9 @@
 #ifndef _OtaThing_H
 #define _OtaThing_H
 
+#include <Arduino.h>
+#include <functional>
+
 namespace ootb
 {
 
@@ -8,7 +11,10 @@ class OtaThing
 {
     public:
     OtaThing();
+    OtaThing(const char* password);
     ~OtaThing();
+
+    void setPassword(String _password);
 
     void begin();
     void handle();
@@ -20,6 +26,13 @@ class OtaThing
     std::function<void()> otaStartCallback;
     std::function<void()> otaEndCallback;
 };
+
+    private:
+    String password;
+    std::function<void()> otaStartCallback;
+    std::function<void()> otaEndCallback;
+};
+
 }
 
 #endif

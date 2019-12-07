@@ -2,20 +2,20 @@
 #define _MqttWifiSpiffsOtaThing_H
 
 #include <MqttWifiSpiffsThing.h>
-#include <OtaThing.h>
+#include <OtaSpiffsThing.h>
 
 namespace ootb
 {
 
-  class MqttWifiSpiffsOtaThing : public MqttWifiSpiffsThing, public OtaThing
-  {
+class MqttWifiSpiffsOtaThing : public MqttWifiSpiffsThing, public OtaSpiffsThing
+{
     public:
-      MqttWifiSpiffsOtaThing();
-      ~MqttWifiSpiffsOtaThing();
+        MqttWifiSpiffsOtaThing();
+        ~MqttWifiSpiffsOtaThing();
 
-      void begin();
-      void handle();
-  };
+        void begin();
+        void handle();
+    };
 }
 
 #endif

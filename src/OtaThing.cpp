@@ -8,8 +8,19 @@ OtaThing::OtaThing()
 {
 }
 
+OtaThing::OtaThing(const char* _password)
+:
+    password(String(_password))
+{
+}
+
 OtaThing::~OtaThing()
 {
+}
+
+void OtaThing::setPassword(String _password)
+{
+    password = _password;
 }
 
 void OtaThing::onOtaStart(std::function<void()> f)
@@ -24,12 +35,12 @@ void OtaThing::onOtaEnd(std::function<void()> f)
 
 void OtaThing::begin()
 {
-    ArduinoOTA.setPasswordHash("bf3967146d23842e157da467392c4520");
-    ArduinoOTA.onStart([]() {
+    ArduinoOTA.setPassword(password.c_str());
+    ArduinoOTA.onStart([&]() {
         Serial.println("Start");
         if (otaStartCallback) otaStartCallback();
     });
-    ArduinoOTA.onEnd([]() {
+    ArduinoOTA.onEnd([&]() {
         Serial.println("\nEnd");
         if (otaStartCallback) otaEndCallback();
     });
@@ -49,5 +60,5 @@ void OtaThing::begin()
 
 void OtaThing::handle()
 {
-  ArduinoOTA.handle();
+    ArduinoOTA.handle();
 }
