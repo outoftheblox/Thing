@@ -1,5 +1,6 @@
 #include "Thing.h"
 #include "BlinkPattern.h"
+#include <ArduinoOTA.h>
 
 using namespace ootb;
 
@@ -17,10 +18,10 @@ void setup()
 {
   Serial.begin(230400);
   Serial.println();
-  
+
   thing.onStateChange([](const String& msg){
     WifiThing::State state = thing.state();
-    
+
     switch(state)
     {
       case WifiThing::State::Disconnected: blink.setPattern(disconnected); break;
@@ -31,14 +32,14 @@ void setup()
     Serial.println(msg);
   });
 
-  thing.addSensor("sensor/test", 1000, [](Value& v){
-    v = count++;
-  });
+  //thing.addSensor("sensor/test", 1000, [](Value& v){
+  //  v = count++;
+  //});
   thing.addActuator("display/test", [](Value& v){
-    String msg = v; 
+    String msg = v;
     Serial.println(msg);
   });
-  
+
   blink.begin();
   thing.begin();
 }
