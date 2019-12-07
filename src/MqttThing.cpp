@@ -98,7 +98,7 @@ password(String(_password))
   if (useTLS)
   {
     wifiClient = new WiFiClientSecure();
-    wifiClient.setCACert(test_root_ca);
+    //wifiClient->setCACert(root_ca);
   }
   else
     wifiClient = new WiFiClient();
@@ -165,7 +165,7 @@ void MqttThing::setServer(String& _server, uint16_t _port, bool useTLS)
   if (useTLS)
   {
     wifiClient = new WiFiClientSecure();
-    client.setCACert(root_ca);
+    //client->setCACert(root_ca);
   }
   else
     wifiClient = new WiFiClient();
