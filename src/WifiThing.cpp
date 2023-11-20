@@ -46,7 +46,8 @@ void WifiThing::addAccessPoint(String& ssid, String& password)
   ap.ssid = ssid;
   ap.password = password;
   _accessPoints.push_back(ap);
-  stateChange("Added network " + ap.ssid);
+  String msg = "Added network " + ap.ssid;
+  stateChange(msg);
 }
 
 void WifiThing::addAccessPoint(String& ssid)
@@ -54,7 +55,8 @@ void WifiThing::addAccessPoint(String& ssid)
   AccessPoint ap;
   ap.ssid = ssid;
   _accessPoints.push_back(ap);
-  stateChange("Added network " + ap.ssid);
+  String msg = "Added network " + ap.ssid;
+  stateChange(msg);
 }
 
 void WifiThing::addAccessPoint(char* ssid, char* password)
@@ -63,7 +65,8 @@ void WifiThing::addAccessPoint(char* ssid, char* password)
   ap.ssid = String(ssid);
   ap.password = String(password);
   _accessPoints.push_back(ap);
-  stateChange("Added network " + ap.ssid);
+  String msg = "Added network " + ap.ssid;
+  stateChange(msg);
 }
 
 std::vector<AccessPoint>& WifiThing::accessPoints()
@@ -128,7 +131,8 @@ void WifiThing::connect()
   if (_state == State::Disconnected)
   {
     _state = State::Connecting;
-    stateChange("Connecting to " + ap.ssid);
+    String msg = "Connecting to " + ap.ssid;
+    stateChange(msg);
     WiFi.begin(ap.ssid.c_str(), ap.password.c_str());
     connectingSince = millis();
     return;
@@ -136,14 +140,17 @@ void WifiThing::connect()
   if (_state == State::Connecting && WiFi.status() == WL_CONNECTED)
   {
     _state = State::Connected;
-    stateChange("Connected to " + ap.ssid);
-    stateChange("Got IP " + WiFi.localIP().toString());
+    String msg = "Connecting to " + ap.ssid;
+    stateChange(msg);
+    String msg2 = "Got IP " + WiFi.localIP().toString();
+    stateChange(msg2);
     return;
   }
   if (_state == State::Connecting && millis() > connectingSince + connectingTimeout)
   {
     _state = State::Disconnected;
-    stateChange("Time out on connecting to " + ap.ssid);
+    String msg = "Time out on connecting to " + ap.ssid;
+    stateChange(msg);
     ++accessPointIndex;
     if (accessPointIndex >= _accessPoints.size())
       accessPointIndex = 0;
