@@ -39,6 +39,7 @@ namespace ootb
         String client;
         String user;
         String password;
+        String willTopic;
 
         PubSubClient *pubSubClient;
         WiFiClient *wifiClient;
