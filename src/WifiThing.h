@@ -58,7 +58,7 @@ namespace ootb
 
     private:
         void stateChange(const char *chars);
-        void stateChange(String &str);
+        void stateChange(const String &str);
 
         std::vector<AccessPoint>::iterator endAccessible();
         void sortAccessPointsByQuality();

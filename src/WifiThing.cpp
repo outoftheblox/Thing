@@ -79,7 +79,7 @@ void WifiThing::onStateChange(std::function<void(const String &)> fun)
     stateChangeCallback = fun;
 }
 
-void WifiThing::stateChange(String &str)
+void WifiThing::stateChange(const String &str)
 {
     if (this->stateChangeCallback)
         stateChangeCallback(str);
