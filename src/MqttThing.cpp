@@ -308,7 +308,7 @@ void MqttThing::connect()
 
     if (!pubSubClient->connected())
     {
-        if (!pubSubClient->connect(client.c_str(), user.c_str(), password.c_str(), willTopic, 2, true, "false"))
+        if (!pubSubClient->connect(client.c_str(), user.c_str(), password.c_str(), willTopic.c_str(), 2, true, "false"))
         {
             String msg("Connecting to MQTT server ");
             msg += server;
