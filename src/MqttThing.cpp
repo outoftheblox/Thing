@@ -173,7 +173,7 @@ void MqttThing::setClient(String &_client)
 
 void MqttThing::setClientBufferSize(uint16_t size)
 {
-    client->setBufferSize(size);
+    pubSubClient->setBufferSize(size);
 }
 
 String &MqttThing::clientId()
