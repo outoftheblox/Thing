@@ -1,7 +1,6 @@
-/data/*
-**/.pioenvs
-**/.piolibdeps
-**/.pio
+.pio
+.vscode
+
 # Prerequisites
 *.d
 
