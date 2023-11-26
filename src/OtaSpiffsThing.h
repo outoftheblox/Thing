@@ -6,21 +6,20 @@
 namespace ootb
 {
 
-  class OtaSpiffsThing : public OtaThing
-  {
+    class OtaSpiffsThing : public OtaThing
+    {
     private:
-      String filename;
+        String filename;
 
     public:
-      OtaSpiffsThing(const char* name);
-      OtaSpiffsThing(String& filename);
-      ~OtaSpiffsThing();
+        OtaSpiffsThing(const char *name);
+        OtaSpiffsThing(String &filename);
+        ~OtaSpiffsThing();
 
-      void begin();
+        void begin();
 
     private:
-
-  };
+    };
 }
 
 #endif

@@ -6,21 +6,20 @@
 namespace ootb
 {
 
-  class MqttSpiffsThing : public MqttThing
-  {
+    class MqttSpiffsThing : public MqttThing
+    {
     private:
-      String filename;
+        String filename;
 
     public:
-      MqttSpiffsThing(const char* name);
-      MqttSpiffsThing(String& filename);
-      ~MqttSpiffsThing();
+        MqttSpiffsThing(const char *name);
+        MqttSpiffsThing(String &filename);
+        ~MqttSpiffsThing();
 
-      void begin();
-      
+        void begin();
+
     private:
-
-  };
+    };
 }
 
 #endif

@@ -6,22 +6,22 @@
 namespace ootb
 {
 
-  class SpiffsTextSettings
-  {
+    class SpiffsTextSettings
+    {
     private:
-      File configFile;
+        File configFile;
 
     public:
-      SpiffsTextSettings();
+        SpiffsTextSettings();
 
-      bool begin();
+        bool begin();
 
-      bool load(const char* filename);
+        bool load(const char *filename);
 
-      String readString();
-      int readInt();
-      bool readBool();
-  };
+        String readString();
+        int readInt();
+        bool readBool();
+    };
 }
 
 #endif

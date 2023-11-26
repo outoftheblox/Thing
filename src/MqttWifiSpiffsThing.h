@@ -7,16 +7,16 @@
 namespace ootb
 {
 
-  class MqttWifiSpiffsThing : public MqttSpiffsThing, public WifiSpiffsThing
-  {
+    class MqttWifiSpiffsThing : public MqttSpiffsThing, public WifiSpiffsThing
+    {
     public:
-      MqttWifiSpiffsThing();
-      ~MqttWifiSpiffsThing();
+        MqttWifiSpiffsThing();
+        ~MqttWifiSpiffsThing();
 
-      void begin();
-      void handle();
-      void onStateChange(std::function<void(const String&)> callback);
-  };
+        void begin();
+        void handle();
+        void onStateChange(std::function<void(const String &)> callback);
+    };
 }
 
 #endif

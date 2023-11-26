@@ -3,15 +3,13 @@
 
 using namespace ootb;
 
-OtaSpiffsThing::OtaSpiffsThing(String& name)
-:
-filename(name)
+OtaSpiffsThing::OtaSpiffsThing(String &name)
+    : filename(name)
 {
 }
 
-OtaSpiffsThing::OtaSpiffsThing(const char* name)
-:
-filename(String(name))
+OtaSpiffsThing::OtaSpiffsThing(const char *name)
+    : filename(String(name))
 {
 }
 

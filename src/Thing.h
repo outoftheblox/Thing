@@ -6,9 +6,9 @@
 namespace ootb
 {
 
-  class Thing : public MqttWifiSpiffsOtaThing
-  {
-  };
+    class Thing : public MqttWifiSpiffsOtaThing
+    {
+    };
 }
 
 #endif

@@ -7,8 +7,8 @@
 namespace ootb
 {
 
-class MqttWifiSpiffsOtaThing : public MqttWifiSpiffsThing, public OtaSpiffsThing
-{
+    class MqttWifiSpiffsOtaThing : public MqttWifiSpiffsThing, public OtaSpiffsThing
+    {
     public:
         MqttWifiSpiffsOtaThing();
         ~MqttWifiSpiffsOtaThing();

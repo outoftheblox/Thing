@@ -3,8 +3,7 @@
 using namespace ootb;
 
 MqttWifiSpiffsOtaThing::MqttWifiSpiffsOtaThing()
-:
-    OtaSpiffsThing("/ota.txt")
+    : OtaSpiffsThing("/ota.txt")
 {
 }
 

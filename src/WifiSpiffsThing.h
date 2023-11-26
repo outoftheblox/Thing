@@ -6,21 +6,20 @@
 namespace ootb
 {
 
-  class WifiSpiffsThing : public WifiThing
-  {
+    class WifiSpiffsThing : public WifiThing
+    {
     private:
-      String filename;
+        String filename;
 
     public:
-      WifiSpiffsThing(const char* name);
-      WifiSpiffsThing(String& filename);
-      ~WifiSpiffsThing();
+        WifiSpiffsThing(const char *name);
+        WifiSpiffsThing(String &filename);
+        ~WifiSpiffsThing();
 
-      void begin();
-      
+        void begin();
+
     private:
-
-  };
+    };
 }
 
 #endif
