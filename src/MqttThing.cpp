@@ -50,6 +50,7 @@ MqttThing::MqttThing()
     Serial.println("MqttThing()");
     things.push_back(this);
     setDefaultClientId();
+    willTopic = String("things/" + clientId() + "/online");
 }
 
 MqttThing::MqttThing(bool useTLS)
@@ -63,6 +64,7 @@ MqttThing::MqttThing(bool useTLS)
     things.push_back(this);
     pubSubClient->setServer(server.c_str(), port);
     setDefaultClientId();
+    willTopic = String("things/" + clientId() + "/online");
 }
 
 MqttThing::MqttThing(const char *_server, uint16_t _port, const char *_client, const char *_user, const char *_password, bool useTLS)
@@ -308,7 +310,8 @@ void MqttThing::connect()
 
     if (!pubSubClient->connected())
     {
-        if (!pubSubClient->connect(client.c_str(), user.c_str(), password.c_str(), willTopic.c_str(), 2, true, "false"))
+        Serial.println(willTopic);
+        if (!pubSubClient->connect(client.c_str(), user.c_str(), password.c_str(), willTopic.c_str(), 0, false, "false"))
         {
             String msg("Connecting to MQTT server ");
             msg += server;
