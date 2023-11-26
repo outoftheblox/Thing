@@ -171,6 +171,11 @@ void MqttThing::setClient(String &_client)
     client = _client;
 }
 
+void MqttThing::setClientBufferSize(uint16_t size)
+{
+    client->setBufferSize(size);
+}
+
 String &MqttThing::clientId()
 {
     return client;

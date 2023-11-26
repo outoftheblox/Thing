@@ -56,6 +56,8 @@ namespace ootb
         void setCredentials(String &username, String &password);
         void setClient(String &client);
 
+        void setClientBufferSize(uint16_t size);
+
         String &clientId();
 
         void publish(String &name, Value &value);
