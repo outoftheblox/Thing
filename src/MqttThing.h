@@ -59,9 +59,9 @@ namespace ootb
         String &clientId();
 
         void publish(String &name, Value &value);
-        void addSensor(String &topic, int interval, std::function<void(Value &)> f);
+        void addSensor(const String &topic, int interval, std::function<void(Value &)> f);
         void addSensor(char *topic, int interval, std::function<void(Value &)> f);
-        void addActuator(String &topic, std::function<void(Value &)> cb);
+        void addActuator(const String &topic, std::function<void(Value &)> cb);
         void addActuator(char *topic, std::function<void(Value &)> cb);
 
         void onStateChange(std::function<void(const String &)> callback);

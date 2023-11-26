@@ -182,7 +182,7 @@ void MqttThing::addSensor(char *topic, int interval, std::function<void(Value &)
     addSensor(t, interval, f);
 }
 
-void MqttThing::addSensor(String &name, int interval, std::function<void(Value &)> function)
+void MqttThing::addSensor(const String &name, int interval, std::function<void(Value &)> function)
 {
     SensorTopic t;
     t.name = name;
@@ -198,7 +198,7 @@ void MqttThing::addActuator(char *topic, std::function<void(Value &)> f)
     addActuator(t, f);
 }
 
-void MqttThing::addActuator(String &name, std::function<void(Value &)> function)
+void MqttThing::addActuator(const String &name, std::function<void(Value &)> function)
 {
     this->pubSubClient->subscribe(name.c_str());
     this->pubSubClient->setCallback(callback);
